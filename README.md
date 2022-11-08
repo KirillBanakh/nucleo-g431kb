@@ -1,1 +1,1 @@
-# stm32f413-disco
+# nucleo-g431kb
