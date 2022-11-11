@@ -1,0 +1,9 @@
+{
+    "version": "0.2",
+    "language": "en",
+    "ignorePaths": [
+        "Build/**",
+        "Project/Drivers/CMSIS/**",
+        "Project/Drivers/Device/**"
+    ]
+}

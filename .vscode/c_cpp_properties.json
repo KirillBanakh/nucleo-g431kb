@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "Nucleo-G431KB",
+            "includePath": [
+                "${workspaceFolder}/Project/Drivers/CMSIS",
+                "${workspaceFolder}/Project/Drivers/Device/Include"
+            ],
+            "defines": [
+                "STM32G431xx",
+                "__GNUC__"
+            ],
+            "windowsSdkVersion": "10.0.19041.0",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "gcc-arm"
+        }
+    ],
+    "version": 4
+}
