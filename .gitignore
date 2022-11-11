@@ -50,3 +50,10 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Build Folder
+Build/**
+!Build/.gitkeep
+
+#VS Code useless settings
+.vscode/settings.json
