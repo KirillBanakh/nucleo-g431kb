@@ -2,15 +2,19 @@
     "configurations": [
         {
             "name": "Nucleo-G431KB",
+            "compilerPath": "${env:GCC}/arm-none-eabi-gcc",
             "includePath": [
+                "${workspaceFolder}/Project/Core",
+                "${workspaceFolder}/Project/Core/HAL",
                 "${workspaceFolder}/Project/Drivers/CMSIS",
-                "${workspaceFolder}/Project/Drivers/Device/Include"
+                "${workspaceFolder}/Project/Drivers/Device/Include",
+                "${workspaceFolder}/Project/Drivers/stm32g4xx_hal_driver/Inc",
+                "${workspaceFolder}/Project/Drivers/stm32g4xx_hal_driver/Inc/Legacy"
             ],
             "defines": [
                 "STM32G431xx",
                 "__GNUC__"
             ],
-            "windowsSdkVersion": "10.0.19041.0",
             "cStandard": "c11",
             "cppStandard": "c++14",
             "intelliSenseMode": "gcc-arm"
