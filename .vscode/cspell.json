@@ -4,6 +4,7 @@
     "ignorePaths": [
         "Build/**",
         "Project/Drivers/CMSIS/**",
-        "Project/Drivers/Device/**"
+        "Project/Drivers/Device/**",
+        "Project/Drivers/stm32g4xx_hal_driver/**"
     ]
 }
