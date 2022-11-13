@@ -1,0 +1,47 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "CMake: Configure Debug Build",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "Build",
+                "-GNinja",
+                "-DCMAKE_BUILD_TYPE=Debug"
+            ]
+        },
+        {
+            "label": "CMake: Configure Release Build",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "Build",
+                "-GNinja",
+                "-DCMAKE_BUILD_TYPE=Release"
+            ]
+        },
+        {
+            "label": "CMake: Build",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "Build"
+            ]
+        },
+        {
+            "label": "CMake: Clean",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "Build",
+                "--target",
+                "clean"
+            ]
+        },
+    ]
+}
