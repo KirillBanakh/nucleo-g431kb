@@ -1,4 +1,5 @@
 #include "main.h"
+#include "tx_api.h"
 
 void System_ClockInit(void) {
     RCC_OscInitTypeDef RCC_OscInitStruct = {0};
@@ -42,14 +43,18 @@ void System_GPIOInit(void) {
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 }
 
+void tx_application_define(void *first_unused_memory) {
+
+}
+
 int main() {
 
     HAL_Init();
     System_ClockInit();
     System_GPIOInit();
+
+    tx_kernel_enter();
     while(1) {
         HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_8);
-        HAL_Delay(500);
-
     }
 }
