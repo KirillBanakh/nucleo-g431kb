@@ -14,7 +14,6 @@ project(nucleo-g431kb)
 
 enable_language(ASM C CXX)
 
-
 set(CORE_FILES
     ${CMAKE_CURRENT_LIST_DIR}/Project/Drivers/Device/Source/system_stm32g4xx.c
     ${CMAKE_CURRENT_LIST_DIR}/Project/Drivers/Device/startup_stm32g431xx.s)
@@ -107,26 +106,39 @@ set(STM32_HAL_LL_G4
     ${CMAKE_CURRENT_LIST_DIR}/Project/Drivers/stm32g4xx_hal_driver/Src/stm32g4xx_ll_usart.c
     ${CMAKE_CURRENT_LIST_DIR}/Project/Drivers/stm32g4xx_hal_driver/Src/stm32g4xx_ll_usb.c
     ${CMAKE_CURRENT_LIST_DIR}/Project/Drivers/stm32g4xx_hal_driver/Src/stm32g4xx_ll_utils.c
+
     ${CMAKE_CURRENT_LIST_DIR}/Project/Core/HAL/stm32g4xx_hal_msp.c
-    ${CMAKE_CURRENT_LIST_DIR}/Project/Core/HAL/stm32g4xx_hal_timebase_tim.c
-    )
+    ${CMAKE_CURRENT_LIST_DIR}/Project/Core/HAL/stm32g4xx_hal_timebase_tim.c)
+
+set(AZURE_RTOS_FILES
+    ${CMAKE_CURRENT_LIST_DIR}/Project/Core/AzureRTOS/cortexm4_vectors.S
+    ${CMAKE_CURRENT_LIST_DIR}/Project/Core/AzureRTOS/tx_initialize_low_level.S
+)
+
+
 
 set(EXECUTABLE ${PROJECT_NAME}.elf)
 
-add_executable(${EXECUTABLE} ${APPLICATION_FILES} ${CORE_FILES} ${STM32_HAL_LL_G4})
+add_executable(${EXECUTABLE} ${APPLICATION_FILES} ${CORE_FILES} ${STM32_HAL_LL_G4} ${AZURE_RTOS_FILES})
+
+include(${CMAKE_CURRENT_LIST_DIR}/Project/AzureRTOS/threadx/common/CMakeLists.txt)
+include(${CMAKE_CURRENT_LIST_DIR}/Project/AzureRTOS/threadx/ports/cortex_m4/gnu/CMakeLists.txt)
 
 target_compile_definitions(${EXECUTABLE} PRIVATE
     -DSTM32F431xx
-)
+    )
 
 target_include_directories(${EXECUTABLE} PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}/Project/Core
     ${CMAKE_CURRENT_LIST_DIR}/Project/Core/HAL
+    ${CMAKE_CURRENT_LIST_DIR}/Project/Core/AzureRTOS
     ${CMAKE_CURRENT_LIST_DIR}/Project/Drivers/CMSIS
     ${CMAKE_CURRENT_LIST_DIR}/Project/Drivers/Device/Include
     ${CMAKE_CURRENT_LIST_DIR}/Project/Drivers/stm32g4xx_hal_driver/Inc
     ${CMAKE_CURRENT_LIST_DIR}/Project/Drivers/stm32g4xx_hal_driver/Legacy
-)
+    ${CMAKE_CURRENT_LIST_DIR}/Project/AzureRTOS/threadx/common/inc
+    ${CMAKE_CURRENT_LIST_DIR}/Project/AzureRTOS/threadx/ports/cortex_m4/gnu/inc
+    )
 
 target_compile_options(${EXECUTABLE} PRIVATE
     -mcpu=cortex-m4
@@ -141,10 +153,11 @@ target_compile_options(${EXECUTABLE} PRIVATE
     -specs=nano.specs
     -Wall
     $<$<CONFIG:Debug>:-Og>
-)
+    )
 
 target_link_options(${EXECUTABLE} PRIVATE
-    -T${CMAKE_SOURCE_DIR}/Project/Drivers/Device/stm32g431kbt6_flash.ld
+    "SHELL: -T ${CMAKE_SOURCE_DIR}/Project/Drivers/Device/stm32g431kbt6_flash.ld"
+    "SHELL: -T ${CMAKE_SOURCE_DIR}/Project/Core/AzureRTOS/sample_threadx.ld"
     -mcpu=cortex-m4
     -mthumb
     -mfpu=fpv4-sp-d16
@@ -156,7 +169,7 @@ target_link_options(${EXECUTABLE} PRIVATE
     -lnosys
     -Wl,-Map=${PROJECT_NAME}.map,--cref
     -Wl,--gc-sections
-)
+    )
 
 add_custom_command(TARGET ${EXECUTABLE} POST_BUILD
     COMMAND arm-none-eabi-objcopy -O ihex ${EXECUTABLE} ${PROJECT_NAME}.hex
