@@ -9,7 +9,9 @@
                 "${workspaceFolder}/Project/Drivers/CMSIS",
                 "${workspaceFolder}/Project/Drivers/Device/Include",
                 "${workspaceFolder}/Project/Drivers/stm32g4xx_hal_driver/Inc",
-                "${workspaceFolder}/Project/Drivers/stm32g4xx_hal_driver/Inc/Legacy"
+                "${workspaceFolder}/Project/Drivers/stm32g4xx_hal_driver/Inc/Legacy",
+                "${workspaceFolder}/Project/AzureRTOS/threadx/common/inc",
+                "${workspaceFolder}/Project/AzureRTOS/threadx/ports/cortex_m4/gnu/inc"
             ],
             "defines": [
                 "STM32G431xx",
